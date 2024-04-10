@@ -1,6 +1,9 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { AccountEntity } from "src/accounts/account.entity"
 
+const SnakeNamingStrategy = require('typeorm-naming-strategies')
+  .SnakeNamingStrategy;
+
 export const typeORMConfig : TypeOrmModuleOptions = {
     "type": "mysql",
     "host": "localhost",
@@ -9,5 +12,6 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     "password": "",
     "database": "my-nest-project",
     "entities": [AccountEntity],
-    "synchronize": false
+    "synchronize": false,
+    "namingStrategy": new SnakeNamingStrategy()
   }
