@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm"
 import { AccountEntity } from "src/accounts/account.entity"
+import { PostEntity } from "src/posts/post.entity";
 
 const SnakeNamingStrategy = require('typeorm-naming-strategies')
   .SnakeNamingStrategy;
@@ -11,7 +12,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     "username": "root",
     "password": "",
     "database": "my-nest-project",
-    "entities": [AccountEntity],
+    "entities": [AccountEntity, PostEntity],
     "synchronize": false,
     "namingStrategy": new SnakeNamingStrategy()
   }

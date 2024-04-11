@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { PostEntity } from "src/posts/post.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity('accounts')
 export class AccountEntity {
@@ -13,4 +14,7 @@ export class AccountEntity {
 
     @Column()
     password: string;
+
+    @OneToMany(() => PostEntity, (post) => post.user)
+    posts: Promise<PostEntity[]>;
 }
