@@ -12,7 +12,7 @@ export class AuthService {
 
     async signIn(userId: string, pass: string): Promise<any> {
         const account = await this.accountsService.findByUserId(userId);
-        if (!account || !await bcrypt.compare(account.password, pass)) {
+        if (!account || !await bcrypt.compare(pass, account.password)) {
           throw new UnauthorizedException();
         }
         const payload = { sub: account.userId }
