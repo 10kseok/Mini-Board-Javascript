@@ -10,6 +10,7 @@ import { AccountsModule } from 'src/accounts/accounts.module';
         TypeOrmModule.forFeature([PostEntity]),
         AccountsModule
     ],
+    exports: [PostsService],
     controllers: [PostsController],
     providers: [PostsService]
 })
