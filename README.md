@@ -11,7 +11,3 @@
 ## 구성
 - Frontend : React.js
 - Backend : Nest.js, MySQL
-
-## ERD 
-<img src="./mini-board-erd.png">
-
