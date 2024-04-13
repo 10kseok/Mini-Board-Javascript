@@ -19,38 +19,30 @@ function LoginPage(props) {
     setRememberMe(!rememberMe)
   };
 
-  const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  const initialUserId = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
 
   return (
     <Formik
       initialValues={{
-        email: initialEmail,
+        userId: initialUserId,
         password: '',
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
+        userId: Yup.string()
+          .required('ID is required'),
         password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
+          .min(4, 'Password must be at least 4 characters')
           .required('Password is required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
-            email: values.email,
+            userId: values.userId,
             password: values.password
           };
-
           dispatch(loginUser(dataToSubmit))
             .then(response => {
-              if (response.payload.loginSuccess) {
-                window.localStorage.setItem('userId', response.payload.userId);
-                if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
-                } else {
-                  localStorage.removeItem('rememberMe');
-                }
+              if (response.payload.accessToken) {
                 props.history.push("/");
               } else {
                 setFormErrorMessage('Check out your Account or Password again')
@@ -86,19 +78,19 @@ function LoginPage(props) {
 
               <Form.Item required>
                 <Input
-                  id="email"
+                  id="userId"
                   prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="Enter your email"
-                  type="email"
-                  value={values.email}
+                  placeholder="Enter your ID"
+                  type="text"
+                  value={values.userId}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
+                    errors.userId && touched.userId ? 'text-input error' : 'text-input'
                   }
                 />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
+                {errors.userId && touched.userId && (
+                  <div className="input-feedback">{errors.userId}</div>
                 )}
               </Form.Item>
 
@@ -126,7 +118,7 @@ function LoginPage(props) {
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
+                <a className="login-form-forgot" href="/login" style={{ float: 'right' }}>
                   forgot password
                   </a>
                 <div>

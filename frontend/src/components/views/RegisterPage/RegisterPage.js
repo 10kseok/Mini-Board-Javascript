@@ -40,22 +40,18 @@ function RegisterPage(props) {
 
     <Formik
       initialValues={{
-        email: '',
-        lastName: '',
+        userId: '',
         name: '',
         password: '',
         confirmPassword: ''
       }}
       validationSchema={Yup.object().shape({
+        userId: Yup.string()
+          .required('ID is required'),
         name: Yup.string()
           .required('Name is required'),
-        lastName: Yup.string()
-          .required('Last Name is required'),
-        email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
         password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
+          .min(4, 'Password must be at least 4 characters')
           .required('Password is required'),
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -65,15 +61,14 @@ function RegisterPage(props) {
         setTimeout(() => {
 
           let dataToSubmit = {
-            email: values.email,
+            userId: values.userId,
             password: values.password,
             name: values.name,
-            lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
 
           dispatch(registerUser(dataToSubmit)).then(response => {
-            if (response.payload.success) {
+            if (response.payload.accountId) {
               props.history.push("/login");
             } else {
               alert(response.payload.err.errmsg)
@@ -100,7 +95,22 @@ function RegisterPage(props) {
           <div className="app">
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
-
+              <Form.Item required label="ID">
+                  <Input
+                    id="userId"
+                    placeholder="Enter your ID"
+                    type="text"
+                    value={values.userId}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                      errors.userId && touched.userId ? 'text-input error' : 'text-input'
+                    }
+                  />
+                  {errors.userId && touched.userId && (
+                    <div className="input-feedback">{errors.userId}</div>
+                  )}
+              </Form.Item>
               <Form.Item required label="Name">
                 <Input
                   id="name"
@@ -115,40 +125,6 @@ function RegisterPage(props) {
                 />
                 {errors.name && touched.name && (
                   <div className="input-feedback">{errors.name}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required label="Last Name">
-                <Input
-                  id="lastName"
-                  placeholder="Enter your Last Name"
-                  type="text"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.lastName && touched.lastName ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.lastName && touched.lastName && (
-                  <div className="input-feedback">{errors.lastName}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
-                <Input
-                  id="email"
-                  placeholder="Enter your Email"
-                  type="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
                 )}
               </Form.Item>
 

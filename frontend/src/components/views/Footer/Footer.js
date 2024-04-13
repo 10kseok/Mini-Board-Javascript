@@ -8,7 +8,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize:'1rem'
         }}>
-           <p> Happy Coding  <Icon type="smile" /></p>
+           <div style={{ float: 'right' }}>Thanks For Using This Boiler Plate by John Ahn</div>
         </div>
     )
 }
