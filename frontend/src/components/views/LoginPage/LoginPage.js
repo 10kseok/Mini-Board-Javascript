@@ -72,7 +72,6 @@ function LoginPage(props) {
         } = props;
         return (
           <div className="app">
-
             <Title level={2}>Log In</Title>
             <form onSubmit={handleSubmit} style={{ width: '350px' }}>
 

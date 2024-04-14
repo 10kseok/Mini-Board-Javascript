@@ -6,10 +6,14 @@ const MenuItemGroup = Menu.ItemGroup;
 function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
-    <Menu.Item key="mail">
-      <a href="/">Home</a>
-    </Menu.Item>
-  </Menu>
+      <Menu.Item key="mail">
+        <a href="/">Posts</a>
+      </Menu.Item>
+
+      <Menu.Item>
+        <a href="/post/write">Writing</a>
+      </Menu.Item>
+    </Menu>
   )
 }
 
