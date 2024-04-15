@@ -24,7 +24,7 @@ export class CommentsService {
 
     async findAllBy(postId: number): Promise<CommentDetail[]> {
         return this.commentRepository.createQueryBuilder('comment')
-            .select(['comment_id', 'user_id', 'content'])
+            .select(['comment_id AS commentId', 'user_id AS userId', 'content'])
             .leftJoin('comment.user', 'accounts')
             .where('post_id = :postId', {postId})
             .execute();
