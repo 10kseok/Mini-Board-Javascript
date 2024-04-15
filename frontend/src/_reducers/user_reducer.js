@@ -13,7 +13,7 @@ export default function(state={}, action){
         case LOGIN_USER:
             return { ...state, authentication: action.payload }
         case AUTH_USER:
-            return {...state, userData: action.payload }
+            return {...state, authentication: action.payload }
         case LOGOUT_USER:
             return {...state }
         default:

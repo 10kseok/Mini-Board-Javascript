@@ -16,11 +16,11 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/" component={Auth(LandingPage)} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/post/write" component={PostWritingPage} />
-          <Route exact path="/posts/:postId" component={PostDetailPage} />
+          <Route exact path="/post/write" component={Auth(PostWritingPage)} />
+          <Route exact path="/posts/:postId" component={Auth(PostDetailPage)} />
         </Switch>
       </div>
       <Footer />

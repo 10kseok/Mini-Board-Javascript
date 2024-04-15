@@ -26,11 +26,12 @@ export function loginUser(dataToSubmit){
     }
 }
 
-export function auth(){
-    const cookies = document.cookie;
+export function auth(token){
+    const request = axios.get(`${AUTH_SERVER}?accessToken=${token}`)
+                .then(response => response.data);
     return {
         type: AUTH_USER,
-        payload: cookies
+        payload: request
     }
 }
 
