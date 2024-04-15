@@ -4,6 +4,7 @@ import Axios from "axios";
 import { Cookies } from 'react-cookie';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import CommentSection from "./comment/CommentSection";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -39,6 +40,7 @@ function PostDetailPage() {
         <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
             <Title style={{ textAlign: 'center'}} level={1}> {Post.title} </Title>
             <Text> {Post.content} </Text>
+            <CommentSection/>
         </div>
     )
 }
