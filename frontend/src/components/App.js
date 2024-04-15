@@ -8,6 +8,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 import PostWritingPage from './views/BoardPage/PostWritingPage.js';
+import PostDetailPage from './views/BoardPage/PostDetailPage.js';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/post/write" component={PostWritingPage} />
+          <Route exact path="/posts/:postId" component={PostDetailPage} />
         </Switch>
       </div>
       <Footer />

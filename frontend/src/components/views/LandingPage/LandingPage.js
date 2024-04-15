@@ -1,4 +1,4 @@
-import { Card, Typography, Icon, Avatar, Col, Row, Tag, Button } from 'antd';
+import { Card, Typography, Icon, Avatar, Col, Row, Tag, Button, Divider } from 'antd';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
@@ -35,12 +35,33 @@ function LandingPage() {
             });
     }, [])
 
+    const colors = [
+        "#e21400", // red
+        "#ef7d00", // orange
+        "#ffb900", // yellow  
+        "#40b400", // green
+        "#009688", // teal
+        "#00acc1", // cyan  
+        "#0091ea", // blue
+        "#4051b5", // indigo
+        "#673ab7", // purple
+        "#ff4081"  // pink
+    ];
+
+    function hashCode(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+           hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return hash;
+    } 
+
     const renderCards = Posts.map((post, index) => {
-        return <Card style={{ marginBottom: 16, border: '1px solid #e8e8e8', borderRadius: 10 }} bordered={true}>
+        return <Card key={post.postId} style={{ marginBottom: 16, border: '1px solid #e8e8e8', borderRadius: 10 }} bordered={true}>
                     <a href={`/posts/${post.postId}`}>
                     <Title level={3}>
                         {post.title}
-                        <Tag style={{marginLeft: 16}} color="green">user1</Tag>
+                        <Tag style={{marginLeft: 16}} color={colors[hashCode(post.userId) % 10]}>{post.userId}</Tag>
                     </Title>
                     <br/>
                     <Paragraph>{post.content}</Paragraph>
@@ -51,7 +72,7 @@ function LandingPage() {
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
             <Title level={2}> Posts </Title>
-            <hr />
+            <Divider />
             <br/>
             <Button style={{ margin: 'auto', display: 'block' }}>Write</Button>
             <br/>
