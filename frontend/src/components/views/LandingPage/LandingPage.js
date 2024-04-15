@@ -17,6 +17,10 @@ function LandingPage() {
     const user = useSelector(state => state.user);
     const [Posts, setPosts] = useState([]);
 
+    const onWriteButtonClick = () => {
+        history.push("/post/write");
+    }
+
     useEffect(() => {
         const cookie = new Cookies();
         const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
@@ -76,7 +80,7 @@ function LandingPage() {
             <Title level={2}> Posts </Title>
             <Divider />
             <br/>
-            <Button style={{ margin: 'auto', display: 'block' }}>Write</Button>
+            <Button style={{ margin: 'auto', display: 'block' }} onClick={onWriteButtonClick}>Write</Button>
             <br/>
             <br/>
             <Row gutter={[32, 16]}>
