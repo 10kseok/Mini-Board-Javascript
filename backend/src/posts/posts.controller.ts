@@ -4,6 +4,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { PostEntity } from './post.entity';
+import { PostDetail } from './dto/post-detail.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -22,13 +23,14 @@ export class PostsController {
     }
 
     @Get("/:postId")
-    readPost(@Param('postId') postId: number): Promise<PostEntity> {
-        return this.postsService.findPostBy(postId);
+    async readPost(@Param('postId') postId: number): Promise<PostDetail> {
+        return PostEntity.convertToDetail(await this.postsService.findPostBy(postId));
     }
 
     @Get()
-    readAll(): Promise<PostEntity[]> {
-        return this.postsService.findAll();
+    async readAll(): Promise<PostDetail[]> {
+        const posts = await this.postsService.findAll();
+        return await posts.map(post => PostEntity.convertToDetail(post));
     }
 
     private extractTokenFromHeader(request: any): string | undefined {
