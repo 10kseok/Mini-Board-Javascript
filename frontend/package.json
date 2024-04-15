@@ -10,11 +10,10 @@
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.6",
-    "react-cookie": "^7.1.4",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
     "react-redux": "^7.1.0-rc.1",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "redux": "^4.0.0",
     "redux-promise": "^0.6.0",
@@ -22,7 +21,7 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start --openssl-legacy-provider",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -43,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-property-in-object": "^7.24.1",
     "@types/react-router-dom": "^5.3.3",
     "http-proxy-middleware": "^1.0.3"
   },

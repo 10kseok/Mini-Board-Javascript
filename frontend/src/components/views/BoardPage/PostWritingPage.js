@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Typography, Button, Form, message, Input, Icon, Descriptions} from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import Axios from "axios";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Cookies } from 'react-cookie';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -22,9 +21,7 @@ function PostWritingPage(props) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const cookie = new Cookies();
-        const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
-            || cookie.get('accessToken');
+        const token = user.authentication.accessToken;
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }

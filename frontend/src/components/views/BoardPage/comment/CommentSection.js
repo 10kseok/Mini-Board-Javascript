@@ -1,17 +1,15 @@
-import { Button, Form, Input, Divider, Card, Row, Col, Typography, List, Avatar } from "antd";
+import { Avatar, Button, Card, Divider, Form, Input, List, Typography } from "antd";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { Cookies } from 'react-cookie';
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 const { TextArea } = Input;
 const { Meta } = Card;
 
 function Comment() {
     const user = useSelector(state => state.user);
-    const history = useHistory();
     const [CommentValue, setCommentValue] = useState("");
     const [Comments, setComments] = useState([]);
     const [ButtonHidden, setButtonHidden] = useState(true);
@@ -19,13 +17,7 @@ function Comment() {
     const { postId } = useParams();
 
     useEffect(() => {
-        const cookie = new Cookies();
-        const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
-            || cookie.get('accessToken');
-        if (token === undefined) {
-            history.push('/login');
-            return;
-        }
+        const token = user.authentication.accessToken
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }
@@ -45,13 +37,7 @@ function Comment() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const cookie = new Cookies();
-        const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
-            || cookie.get('accessToken');
-        if (token === undefined) {
-            history.push('/login');
-            return;
-        }
+        const token = user.authentication.accessToken
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }

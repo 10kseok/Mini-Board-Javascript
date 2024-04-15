@@ -1,18 +1,13 @@
-import { Card, Typography, Icon, Avatar, Col, Row, Tag, Button, Divider } from 'antd';
-import Axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { FaCode } from "react-icons/fa";
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
+import { Button, Card, Divider, Row, Tag, Typography } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 const { Title } = Typography;
-const { Meta } = Card;
 
 function LandingPage() {
-    // DOM 로딩시 할 일 정의, 두번째 인자에 빈 배열을 넣으면 컴포넌트가 마운트됐을 때만 실행, 특정 값을 넣으면 이 값들이 변경될 때마다 효과가 실행
     const history = useHistory();
     const user = useSelector(state => state.user);
     const [Posts, setPosts] = useState([]);
@@ -22,13 +17,7 @@ function LandingPage() {
     }
 
     useEffect(() => {
-        const cookie = new Cookies();
-        const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
-            || cookie.get('accessToken');
-        if (token === undefined) {
-            history.push('/login');
-            return;
-        }
+        const token = user.authentication?.accessToken ?? "";
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }
@@ -37,7 +26,8 @@ function LandingPage() {
                 if (response.data) {
                     setPosts(response.data);
                 }
-            });
+            })
+            .catch(() => history.push("/login"));
     }, [])
 
     const colors = [

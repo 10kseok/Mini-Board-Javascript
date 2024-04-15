@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message, Input, Icon, Descriptions} from "antd";
+import { Typography } from "antd";
 import Axios from "axios";
-import { Cookies } from 'react-cookie';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
 import CommentSection from "./comment/CommentSection";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 function PostDetailPage() {
     const { postId } = useParams();
-    const history = useHistory();
     const user = useSelector(state => state.user);
 
     const [Post, setPost] = useState({title: '', content: ''});
 
     useEffect(() => {
-        const cookie = new Cookies();
-        const token = user.authentication !== undefined ? user.authentication.accessToken : undefined
-            || cookie.get('accessToken');
-        if (token === undefined) {
-            history.push('/login');
-            return;
-        }
+        const token = user.authentication.accessToken  
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }
