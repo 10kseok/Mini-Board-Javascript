@@ -1,5 +1,5 @@
-import { TypeOrmModuleOptions } from "@nestjs/typeorm"
-import { AccountEntity } from "src/accounts/account.entity"
+import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { AccountEntity } from "src/accounts/account.entity";
 import { CommentEntity } from "src/comments/comment.entity";
 import { PostEntity } from "src/posts/post.entity";
 
@@ -15,5 +15,6 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     "database": "my-nest-project",
     "entities": [AccountEntity, PostEntity, CommentEntity],
     "synchronize": false,
-    "namingStrategy": new SnakeNamingStrategy()
+    "namingStrategy": new SnakeNamingStrategy(),
+    logging: true,
   }

@@ -1,10 +1,13 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const sqlLogger = new Logger('SQL');
   app.setGlobalPrefix("api");
+  app.useLogger(sqlLogger);
 
   const config = new DocumentBuilder()
     .setTitle('Mini-Board')
