@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import Paragraph from 'antd/lib/typography/Paragraph';
+import { Link, useHistory } from 'react-router-dom';
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -56,17 +57,18 @@ function LandingPage() {
         return hash;
     } 
 
-    const renderCards = Posts.map((post, index) => {
-        return <Card key={post.postId} style={{ marginBottom: 16, border: '1px solid #e8e8e8', borderRadius: 10 }} bordered={true}>
-                    <a href={`/posts/${post.postId}`}>
-                    <Title level={3}>
-                        {post.title}
-                        <Tag style={{marginLeft: 16}} color={colors[hashCode(post.userId) % 10]}>{post.userId}</Tag>
-                    </Title>
-                    <br/>
-                    <Paragraph>{post.content}</Paragraph>
-                    </a>
-                </Card>    
+    const renderCards = Posts.sort((p1, p2) => p2.postId - p1.postId)
+        .map((post, index) => {
+            return <Card key={post.postId} style={{ marginBottom: 16, border: '1px solid #e8e8e8', borderRadius: 10 }} bordered={true}>
+                        <Link to={`/posts/${post.postId}`}>
+                        <Title level={3}>
+                            {post.title}
+                            <Tag style={{marginLeft: 16}} color={colors[hashCode(post.userId) % 10]}>{post.userId}</Tag>
+                        </Title>
+                        <br/>
+                        <Paragraph ellipsis={{ rows: 2 }}>{post.content}</Paragraph>
+                        </Link>
+                    </Card>    
     })
 
     return (

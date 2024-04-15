@@ -1,17 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
       <Menu.Item key="mail">
-        <a href="/">Posts</a>
+        <Link to="/">Posts</Link>
       </Menu.Item>
 
       <Menu.Item>
-        <a href="/post/write">Writing</a>
+        <Link to="/post/write">Writing</Link>
       </Menu.Item>
     </Menu>
   )
