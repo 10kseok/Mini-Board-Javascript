@@ -11,3 +11,10 @@ React와 Nest로 구성된 간단한 게시판 프로젝트
 ## 구성
 - Frontend : React.js
 - Backend : Nest.js, MySQL
+
+## Backend
+### ERD 
+<img src="./backend/mini-board-erd.png">
+
+### API SPEC
+<img src="./backend/swagger-image.png">

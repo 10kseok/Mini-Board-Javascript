@@ -12,7 +12,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Mini-Board')
     .setDescription('Mini-Board에 대한 API 명세서')
-    .setVersion('1.0')
+    .setVersion('1.1')
     .addTag('Boards')
     .build();
   const document = SwaggerModule.createDocument(app, config);
