@@ -29,4 +29,8 @@ export class PostsService {
         post.user = await account;
         return (await this.postRepository.save(post)).postId;
     }
+
+    async removePost(postId: number) {
+        this.postRepository.delete({postId});
+    }
 }

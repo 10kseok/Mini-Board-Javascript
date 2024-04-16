@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Req, HttpCode } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -21,6 +21,12 @@ export class PostsController {
         const userId = this.jwtService.decode(token).sub;
         const account = this.accountService.findByUserId(userId);
         return this.postsService.createPost(createPostDto, account);
+    }
+
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @Delete('/post/:postId')
+    deletePost(@Param('postId') postId: number): Promise<void> {
+        return this.postsService.removePost(postId);
     }
     
     @Public()
