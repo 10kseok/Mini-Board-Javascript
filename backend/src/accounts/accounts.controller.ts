@@ -1,8 +1,8 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Public } from 'src/auth/constants';
 import { AccountEntity } from './account.entity';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { Public } from 'src/auth/constants';
 
 
 @Controller('accounts')
