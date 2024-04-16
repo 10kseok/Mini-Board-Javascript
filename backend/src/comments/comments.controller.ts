@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentEntity } from './comment.entity';
 import { CommentDetail } from './dto/comment-detail.dto';
+import { Public } from 'src/auth/constants';
 
 @Controller('comments')
 export class CommentsController {
@@ -25,6 +26,7 @@ export class CommentsController {
         return this.commentService.createComment(createCommentDto.content, user, post);
     }
 
+    @Public()
     @Get("/:postId")
     readComment(@Param("postId") postId: number): Promise<CommentDetail[]> {
         return this.commentService.findAllBy(postId);

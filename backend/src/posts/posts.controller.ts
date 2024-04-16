@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { PostEntity } from './post.entity';
 import { PostDetail } from './dto/post-detail.dto';
+import { Public } from 'src/auth/constants';
 
 @Controller('posts')
 export class PostsController {
@@ -21,12 +22,14 @@ export class PostsController {
         const account = this.accountService.findByUserId(userId);
         return this.postsService.createPost(createPostDto, account);
     }
-
+    
+    @Public()
     @Get("/:postId")
     async readPost(@Param('postId') postId: number): Promise<PostDetail> {
         return PostEntity.convertToDetail(await this.postsService.findPostBy(postId));
     }
 
+    @Public()
     @Get()
     async readAll(): Promise<PostDetail[]> {
         const posts = await this.postsService.findAll();
