@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Req, HttpCode } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Req, HttpCode, Put } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -6,6 +6,7 @@ import { AccountsService } from 'src/accounts/accounts.service';
 import { PostEntity } from './post.entity';
 import { PostDetail } from './dto/post-detail.dto';
 import { Public } from 'src/auth/constants';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -21,6 +22,11 @@ export class PostsController {
         const userId = this.jwtService.decode(token).sub;
         const account = this.accountService.findByUserId(userId);
         return this.postsService.createPost(createPostDto, account);
+    }
+
+    @Put("/post/:postId")
+    updatePost(@Param('postId') postId: number, @Body() updatePostDto: UpdatePostDto): Promise<number> {
+        return this.postsService.updatePost(updatePostDto, postId);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
