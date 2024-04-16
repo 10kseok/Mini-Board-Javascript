@@ -64,8 +64,7 @@ function PostWritingPage(props) {
                         onChange={onDescriptionChange}
                         value={Description}
                         placeholder="Description"
-                        autoSize={false}
-                        rows={10} 
+                        autoSize={{ minRows : 15 }}
                     />
                 </Form.Item>
                 
