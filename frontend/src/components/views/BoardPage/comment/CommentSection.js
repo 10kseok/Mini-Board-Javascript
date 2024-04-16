@@ -1,8 +1,8 @@
-import { Avatar, Button, Card, Divider, Form, Input, List, Typography } from "antd";
+import { Avatar, Button, Card, Divider, Form, Input, List, Typography, Modal } from "antd";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -13,15 +13,13 @@ function Comment() {
     const [CommentValue, setCommentValue] = useState("");
     const [Comments, setComments] = useState([]);
     const [ButtonHidden, setButtonHidden] = useState(true);
-    
+    const [IsLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
     const { postId } = useParams();
+    const history = useHistory();
 
     useEffect(() => {
-        const token = user.authentication.accessToken
-        const config = {
-            headers: {'Authorization': `Bearer ${token}`}
-        }
-        Axios.get(`/api/comments/${postId}`, config)
+        Axios.get(`/api/comments/${postId}`)
             .then(response => {
                 if (response.data) {
                     setComments(response.data);
@@ -37,7 +35,11 @@ function Comment() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const token = user.authentication.accessToken
+        const token = user.authentication?.accessToken ?? "";
+        if (!token) {
+            setIsLoginModalOpen(true);
+            return;
+        }
         const config = {
             headers: {'Authorization': `Bearer ${token}`}
         }
@@ -58,8 +60,16 @@ function Comment() {
                         })
                 }
             })
-        
     }
+
+    const handleLogin = () => {
+        setIsLoginModalOpen(false);
+        history.push("/login");
+    };
+
+    const handleCancel = () => {
+        setIsLoginModalOpen(false);
+    };
 
     const renderComments = Comments
         .sort((c1, c2) => c2.commentId - c1.commentId)
@@ -92,13 +102,13 @@ function Comment() {
                 />
                 <br/>
                 <Button style={{ width: '15%', height: '52px'}} onClick={onSubmit} hidden={ButtonHidden}> Submit </Button>
+                <Modal okType="link" okText="Sign in" visible={IsLoginModalOpen} onOk={handleLogin} onCancel={handleCancel}>
+                    로그인 후 댓글 작성 가능합니다.
+                </Modal>
             </Form>
 
-
             {/* Previous Comment List */}
-            <List
-                size="large"
-            >   
+            <List size="large">   
                 {renderComments}
             </List>
         </div>

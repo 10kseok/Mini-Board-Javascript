@@ -17,17 +17,12 @@ function LandingPage() {
     }
 
     useEffect(() => {
-        const token = user.authentication?.accessToken ?? "";
-        const config = {
-            headers: {'Authorization': `Bearer ${token}`}
-        }
-        Axios.get("/api/posts", config)
+        Axios.get("/api/posts")
             .then(response => {
                 if (response.data) {
                     setPosts(response.data);
                 }
             })
-            .catch(() => history.push("/login"));
     }, [])
 
     const colors = [

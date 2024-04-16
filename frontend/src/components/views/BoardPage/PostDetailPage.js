@@ -5,20 +5,14 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import CommentSection from "./comment/CommentSection";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 function PostDetailPage() {
     const { postId } = useParams();
-    const user = useSelector(state => state.user);
-
-    const [Post, setPost] = useState({title: '', content: ''});
+    const [Post, setPost] = useState({title: '', content: '', userId: ''});
 
     useEffect(() => {
-        const token = user.authentication.accessToken  
-        const config = {
-            headers: {'Authorization': `Bearer ${token}`}
-        }
-        Axios.get(`/api/posts/${postId}`, config)
+        Axios.get(`/api/posts/${postId}`)
             .then(response => {
                 if (response.data) {
                     setPost(response.data);
@@ -31,7 +25,8 @@ function PostDetailPage() {
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
             <Title style={{ textAlign: 'center'}} level={1}> {Post.title} </Title>
-            <Text> {Post.content} </Text>
+            <Paragraph style={{ textAlign: 'right'}}> written by <strong>{Post.userId}</strong> </Paragraph>
+            <Text style={{ whiteSpace: 'pre-wrap' }}> {Post.content} </Text>
             <CommentSection/>
         </div>
     )
