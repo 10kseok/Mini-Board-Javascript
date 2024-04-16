@@ -20,6 +20,7 @@ function App() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/post/write" component={Auth(PostWritingPage)} />
+          <Route exact path="/post/update" component={Auth(PostWritingPage)} />
           <Route exact path="/posts/:postId" component={PostDetailPage} />
         </Switch>
       </div>

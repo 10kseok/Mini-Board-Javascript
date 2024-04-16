@@ -16,7 +16,6 @@ function PostDetailPage() {
     const [IsDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const history = useHistory();
 
-
     const handleDeleteButton = () => {
         setIsDeleteModalOpen(true);
     }
@@ -28,7 +27,6 @@ function PostDetailPage() {
         }
         Axios.delete(`/api/posts/post/${postId}`, config)
             .then(response => {
-                console.log(response);
                 if (response.status == 204) {
                     history.push("/");
                 } else {
@@ -38,7 +36,7 @@ function PostDetailPage() {
     }
 
     const handleUpdateButton = () => {
-        alert("update")
+        history.push("/post/update", { postId: postId, title: Post.title, content: Post.content });
     }
 
     const handleCancel = () => {
@@ -58,9 +56,7 @@ function PostDetailPage() {
                 }
                 setIsOwnPost(response.data.userId === TokenParser.parseToUserId(token));
             })
-            .catch(error => {
-                console.log("fail", error);
-            });
+            .catch(ignore => {});
     }, [])
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto'}}>
