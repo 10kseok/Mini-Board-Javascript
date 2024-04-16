@@ -2,7 +2,8 @@
 import { Menu } from 'antd';
 import React from 'react';
 import { useSelector } from "react-redux";
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import TokenParser from '../../../util/TokenParser';
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -12,24 +13,29 @@ function RightMenu(props) {
     props.history.push("/login");
   };
 
-  const isAuth = user.authentication?.accessToken ?? "";
-  if (isAuth) {
+  const tokenParser = TokenParser.parseToUserId;
+  const token = user.authentication?.accessToken ?? "";
+  if (token) {
     return (
       <Menu mode={props.mode}>
-          <Menu.Item key="logout">
-            <a onClick={logoutHandler}>Logout</a>
-          </Menu.Item>
+        <Menu.Item disabled={true} key="userId">
+          <Link to="/"><strong>{tokenParser(token)}</strong></Link>
+        </Menu.Item>
+
+        <Menu.Item key="logout">
+          <a onClick={logoutHandler}>Logout</a>
+        </Menu.Item>
       </Menu>
     )
   } else {
     return (
       <Menu mode={props.mode}>
-          <Menu.Item key="mail">
-            <a href="/login">Sign in</a>
-          </Menu.Item>
-          <Menu.Item key="app">
-            <a href="/register">Sign up</a>
-          </Menu.Item>
+        <Menu.Item key="mail">
+          <a href="/login">Sign in</a>
+        </Menu.Item>
+        <Menu.Item key="app">
+          <a href="/register">Sign up</a>
+        </Menu.Item>
       </Menu>
     )
   }
